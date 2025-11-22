@@ -1,3 +1,7 @@
+import os
+
+os.environ.setdefault("DATABASE_URL", "postgresql+asyncpg://test:test@localhost/testdb")
+
 import pytest
 import pytest_asyncio
 from httpx import ASGITransport, AsyncClient
