@@ -4,6 +4,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 
 from app.dependencies import Pagination, get_current_user, get_db, optional_current_user
 from app.schemas.record import RecordCreate, RecordList, RecordRead, RecordUpdate
+from app.services import records as records_service
 
 router = APIRouter(prefix="/records", tags=["records"])
 
@@ -14,7 +15,7 @@ async def create_record(
     current_user=Depends(get_current_user),
     db=Depends(get_db),
 ):
-    raise HTTPException(status_code=status.HTTP_501_NOT_IMPLEMENTED)
+    return await records_service.create_record(db, payload, current_user.id)
 
 
 @router.get("/", response_model=RecordList)
@@ -23,7 +24,8 @@ async def list_records(
     current_user=Depends(optional_current_user),
     db=Depends(get_db),
 ):
-    return RecordList(items=[], total=0, page=pagination.page, size=pagination.size)
+    items, total = await records_service.list_records(db, offset=pagination.offset, limit=pagination.size)
+    return RecordList(items=items, total=total, page=pagination.page, size=pagination.size)
 
 
 @router.get("/{record_id}", response_model=RecordRead)
@@ -32,7 +34,10 @@ async def get_record(
     current_user=Depends(optional_current_user),
     db=Depends(get_db),
 ):
-    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Record not found")
+    record = await records_service.get_record(db, record_id)
+    if record is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Record not found")
+    return record
 
 
 @router.patch("/{record_id}", response_model=RecordRead)
@@ -42,7 +47,12 @@ async def update_record(
     current_user=Depends(get_current_user),
     db=Depends(get_db),
 ):
-    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Record not found")
+    record = await records_service.get_record(db, record_id)
+    if record is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Record not found")
+    if record.user_id != current_user.id:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Not your record")
+    return await records_service.update_record(db, record, payload)
 
 
 @router.delete("/{record_id}", status_code=status.HTTP_204_NO_CONTENT)
@@ -51,4 +61,9 @@ async def delete_record(
     current_user=Depends(get_current_user),
     db=Depends(get_db),
 ):
-    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Record not found")
+    record = await records_service.get_record(db, record_id)
+    if record is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Record not found")
+    if record.user_id != current_user.id:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Not your record")
+    await records_service.delete_record(db, record)
