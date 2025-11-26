@@ -14,6 +14,10 @@ async def lifespan(app: FastAPI):
     await engine.dispose()
 
 
+def _cors_origins() -> list[str]:
+    return [o.strip() for o in settings.backend_cors_origins.split(",") if o.strip()]
+
+
 app = FastAPI(
     title="Zenodo-Lite API",
     version="0.1.0",
@@ -23,10 +27,10 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[settings.frontend_url],
+    allow_origins=_cors_origins(),
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
+    allow_headers=["Content-Type", "Authorization"],
 )
 
 app.include_router(auth.router, prefix="/api")
