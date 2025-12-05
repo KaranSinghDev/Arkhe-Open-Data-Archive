@@ -8,6 +8,7 @@ from app.schemas.file import FileList, FileRead
 from app.services import files as files_service
 from app.services import records as records_service
 from app.services import storage
+from app.services import tasks as tasks_service
 
 router = APIRouter(prefix="/records/{record_id}/files", tags=["files"])
 
@@ -24,7 +25,9 @@ async def upload_file(
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Record not found")
     if record.user_id != current_user.id:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Not your record")
-    return await files_service.upload_file(db, record_id, file)
+    file_row = await files_service.upload_file(db, record_id, file)
+    tasks_service.trigger_file_parse(file_row)
+    return file_row
 
 
 @router.get("/", response_model=FileList)

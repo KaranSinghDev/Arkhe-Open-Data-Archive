@@ -5,6 +5,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from app.dependencies import Pagination, get_current_user, get_db, optional_current_user
 from app.schemas.record import RecordCreate, RecordList, RecordRead, RecordUpdate
 from app.services import records as records_service
+from app.services import tasks as tasks_service
 
 router = APIRouter(prefix="/records", tags=["records"])
 
@@ -52,7 +53,11 @@ async def update_record(
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Record not found")
     if record.user_id != current_user.id:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Not your record")
-    return await records_service.update_record(db, record, payload)
+    was_pending = record.status != "published"
+    updated = await records_service.update_record(db, record, payload)
+    if was_pending and updated.status == "published":
+        tasks_service.trigger_record_index(updated)
+    return updated
 
 
 @router.delete("/{record_id}", status_code=status.HTTP_204_NO_CONTENT)
@@ -66,4 +71,5 @@ async def delete_record(
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Record not found")
     if record.user_id != current_user.id:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Not your record")
+    tasks_service.trigger_record_deindex(str(record.id))
     await records_service.delete_record(db, record)
