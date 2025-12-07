@@ -1,5 +1,4 @@
 import io
-from typing import AsyncIterator
 
 from minio import Minio
 from minio.error import S3Error
