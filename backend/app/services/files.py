@@ -43,6 +43,11 @@ async def upload_file(
         )
 
     content_type = _detect_content_type(upload.filename or "", upload.content_type or "")
+    if content_type not in _ALLOWED_TYPES:
+        raise HTTPException(
+            status_code=status.HTTP_415_UNSUPPORTED_MEDIA_TYPE,
+            detail=f"File type '{content_type}' is not supported",
+        )
     object_key = storage.build_object_key(str(record_id), upload.filename or "upload")
 
     await storage.upload_file(object_key, data, content_type)
