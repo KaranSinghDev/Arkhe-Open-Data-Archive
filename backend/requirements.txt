@@ -23,6 +23,9 @@ pypdf==4.2.0
 celery==5.4.0
 flower==2.0.1
 
+# Search
+opensearch-py==2.4.2
+
 # Testing
 pytest==8.2.2
 pytest-asyncio==0.23.7
