@@ -16,16 +16,13 @@
       "id":          { "type": "keyword" },
       "title":       { "type": "text", "analyzer": "scientific_text" },
       "description": { "type": "text", "analyzer": "scientific_text" },
-      "authors":     { "type": "text", "analyzer": "scientific_text" },
       "keywords":    { "type": "keyword" },
       "experiment":  { "type": "keyword" },
       "record_type": { "type": "keyword" },
-      "year":        { "type": "keyword" },
-      "doi":         { "type": "keyword" },
+      "year":        { "type": "integer" },
       "license":     { "type": "keyword" },
-      "uploader":    { "type": "keyword" },
       "status":      { "type": "keyword" },
-      "created_at":  { "type": "date" }
+      "user_id":     { "type": "keyword" }
     }
   }
 }
