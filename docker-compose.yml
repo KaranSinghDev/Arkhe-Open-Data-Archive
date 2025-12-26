@@ -129,7 +129,9 @@ services:
     command: celery -A app.workers.celery_app:celery_app flower --port=5555
 
   nginx:
-    build: ./nginx
+    build:
+      context: .
+      dockerfile: nginx/Dockerfile
     ports:
       - "80:80"
     depends_on:
