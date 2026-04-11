@@ -13,7 +13,7 @@ from app.database import engine
 from app.logging_config import configure_logging
 from app.middleware.logging import RequestLoggingMiddleware
 from app.middleware.rate_limit import limiter
-from app.routers import auth, files, records, search
+from app.routers import auth, files, health, records, search
 
 configure_logging()
 
@@ -61,6 +61,7 @@ app.add_middleware(
     allow_headers=["Content-Type", "Authorization"],
 )
 
+app.include_router(health.router)
 app.include_router(auth.router, prefix="/api", tags=["auth"])
 app.include_router(records.router, prefix="/api", tags=["records"])
 app.include_router(files.router, prefix="/api", tags=["files"])
@@ -68,5 +69,5 @@ app.include_router(search.router, prefix="/api", tags=["search"])
 
 
 @app.get("/health", include_in_schema=False)
-async def health():
+async def health_legacy():
     return {"status": "ok"}
