@@ -1,0 +1,55 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      target: production
+    volumes: []
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --workers 4
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: "2"
+          memory: 1G
+
+  celery-worker:
+    volumes: []
+    command: celery -A app.workers.celery_app:celery_app worker --loglevel=warning --concurrency=4
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: "1"
+          memory: 512M
+
+  celery-flower:
+    volumes: []
+    restart: unless-stopped
+
+  nginx:
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 128M
+
+  postgres:
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  redis:
+    restart: unless-stopped
+
+  opensearch:
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+
+  minio:
+    volumes:
+      - minio_data:/data
+    restart: unless-stopped
