@@ -6,8 +6,8 @@ on:
 
 env:
   REGISTRY: docker.io
-  BACKEND_IMAGE: ${{ github.repository_owner }}/arkhe-backend
-  FRONTEND_IMAGE: ${{ github.repository_owner }}/arkhe-frontend
+  BACKEND_IMAGE: karandev7/arkhe-backend
+  FRONTEND_IMAGE: karandev7/arkhe-frontend
 
 jobs:
   build-backend:

@@ -11,7 +11,7 @@ authors:
 version: 1.0.0
 date-released: "2026-05-03"
 license: MIT
-repository-code: https://github.com/your-org/arkhe
+repository-code: https://github.com/KaranSinghDev/Arkhe-Open-Data-Archive
 abstract: >-
   Arkhe is a self-hostable, lightweight scientific data repository
   for research groups, university departments, and teaching environments.

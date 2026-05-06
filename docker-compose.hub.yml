@@ -72,7 +72,7 @@ services:
     restart: unless-stopped
 
   backend:
-    image: karansingh/arkhe-backend:latest
+    image: karandev7/arkhe-backend:latest
     env_file: .env
     environment:
       DATABASE_URL: postgresql+asyncpg://${POSTGRES_USER:-arkhe}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB:-arkhe}
@@ -93,7 +93,7 @@ services:
     restart: unless-stopped
 
   celery-worker:
-    image: karansingh/arkhe-backend:latest
+    image: karandev7/arkhe-backend:latest
     env_file: .env
     environment:
       DATABASE_URL: postgresql+asyncpg://${POSTGRES_USER:-arkhe}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB:-arkhe}
@@ -108,7 +108,7 @@ services:
     restart: unless-stopped
 
   nginx:
-    image: karansingh/arkhe-frontend:latest
+    image: karandev7/arkhe-frontend:latest
     ports:
       - "80:80"
     depends_on:

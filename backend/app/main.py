@@ -37,7 +37,7 @@ app = FastAPI(
         "Supports ORCID authentication, file uploads up to 2 GB, full-text search "
         "via OpenSearch, and FAIR-compliant JSON-LD metadata on every record."
     ),
-    contact={"name": "Arkhe", "url": "https://github.com/your-org/arkhe"},
+    contact={"name": "Arkhe", "url": "https://github.com/KaranSinghDev/Arkhe-Open-Data-Archive"},
     license_info={"name": "MIT", "url": "https://opensource.org/licenses/MIT"},
     openapi_tags=[
         {"name": "auth", "description": "ORCID OAuth 2.0 login and session management"},
