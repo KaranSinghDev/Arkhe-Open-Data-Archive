@@ -25,7 +25,7 @@ flower==2.0.1
 redis[asyncio]==5.0.4
 
 # Search
-opensearch-py==2.4.2
+opensearch-py[async]==2.4.2
 
 # Observability
 slowapi==0.1.9
