@@ -144,7 +144,7 @@ The prod override removes volume bind-mounts, runs 4 Uvicorn workers, sets memor
 |---|---|---|---|
 | Self-hostable | Yes | Yes | No |
 | Setup time | ~5 min | 2–8 hours | N/A (SaaS) |
-| Min RAM (single node) | ~4 GB | ~16 GB | N/A |
+| Min RAM (single node) | ~2 GB | ~16 GB | N/A |
 | Services required | 9 | 30+ | N/A |
 | Kubernetes required | No | Recommended | N/A |
 | DOI minting (DataCite) | No | Yes | Yes |
@@ -156,6 +156,28 @@ The prod override removes volume bind-mounts, runs 4 Uvicorn workers, sets memor
 | Full-text search | Yes (OpenSearch) | Yes (Elasticsearch) | Yes |
 | File size limit | 2 GB (configurable) | Configurable | 50 GB |
 | Background file parsing | Yes (CSV/JSON/PDF/ROOT) | Plugin-based | No |
+
+### Measured resource usage
+
+Numbers from `docker stats` on a laptop (Intel i7, 12 GB RAM, WSL2), idle with no records:
+
+| Container | Memory |
+|---|---|
+| backend (FastAPI + uvicorn) | 122 MiB |
+| celery-worker | 91 MiB |
+| celery-flower | 51 MiB |
+| minio | 81 MiB |
+| postgres | 59 MiB |
+| redis | 7 MiB |
+| **opensearch** | **~1 GiB** |
+| **Total** | **~1.4 GiB** |
+
+OpenSearch accounts for most of the footprint. If you replace it with PostgreSQL full-text search (a future option), the whole stack would fit in ~450 MiB.
+
+Search latency (p50 / p95, measured inside the container, 200 requests at concurrency 10):
+
+- `GET /api/records` — 11 ms / 22 ms
+- `GET /api/search?q=` — 12 ms / 58 ms
 
 ---
 
