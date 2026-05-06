@@ -49,8 +49,10 @@ def _parse_pdf(data: bytes) -> dict:
 
 def _parse_root(data: bytes, filename: str) -> dict:
     try:
+        import os
+        import tempfile
+
         import uproot
-        import tempfile, os
         with tempfile.NamedTemporaryFile(suffix=".root", delete=False) as f:
             f.write(data)
             tmppath = f.name

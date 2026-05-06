@@ -38,11 +38,11 @@ class Record(Base):
         DateTime(timezone=True), server_default=func.now(), onupdate=func.now(), nullable=False
     )
 
-    user: Mapped["User"] = relationship("User", back_populates="records")  # type: ignore[name-defined]
-    files: Mapped[list["File"]] = relationship(  # type: ignore[name-defined]
+    user: Mapped["User"] = relationship("User", back_populates="records")  # type: ignore[name-defined]  # noqa: F821
+    files: Mapped[list["File"]] = relationship(  # type: ignore[name-defined]  # noqa: F821
         "File", back_populates="record", cascade="all, delete-orphan"
     )
-    record_authors: Mapped[list["RecordAuthor"]] = relationship(  # type: ignore[name-defined]
+    record_authors: Mapped[list["RecordAuthor"]] = relationship(  # type: ignore[name-defined]  # noqa: F821
         "RecordAuthor", back_populates="record", cascade="all, delete-orphan",
         order_by="RecordAuthor.author_order"
     )

@@ -18,4 +18,4 @@ class User(Base):
         DateTime(timezone=True), server_default=func.now(), nullable=False
     )
 
-    records: Mapped[list["Record"]] = relationship("Record", back_populates="user")  # type: ignore[name-defined]
+    records: Mapped[list["Record"]] = relationship("Record", back_populates="user")  # type: ignore[name-defined]  # noqa: F821

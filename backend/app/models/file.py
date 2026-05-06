@@ -25,4 +25,4 @@ class File(Base):
         DateTime(timezone=True), server_default=func.now(), nullable=False
     )
 
-    record: Mapped["Record"] = relationship("Record", back_populates="files")  # type: ignore[name-defined]
+    record: Mapped["Record"] = relationship("Record", back_populates="files")  # type: ignore[name-defined]  # noqa: F821

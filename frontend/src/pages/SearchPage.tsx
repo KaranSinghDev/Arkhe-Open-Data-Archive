@@ -8,13 +8,19 @@ import { useSearch } from '../hooks/useSearch'
 import { usePagination } from '../hooks/usePagination'
 import type { Facets } from '../api/search'
 
+interface Filters {
+  experiment?: string
+  record_type?: string
+  year?: number
+}
+
 const EMPTY_FACETS: Facets = { experiments: [], record_types: [], years: [] }
 
 export function SearchPage() {
   const [searchParams, setSearchParams] = useSearchParams()
   const { data, loading, run } = useSearch()
   const { page, size, goTo, reset } = usePagination()
-  const [filters, setFilters] = useState({
+  const [filters, setFilters] = useState<Filters>({
     experiment: searchParams.get('experiment') ?? undefined,
     record_type: searchParams.get('record_type') ?? undefined,
     year: searchParams.get('year') ? parseInt(searchParams.get('year')!) : undefined,

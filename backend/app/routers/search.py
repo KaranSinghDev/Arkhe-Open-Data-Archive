@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends
 
 from app.schemas.search import Facets, SearchQuery, SearchResponse
 from app.services import search as search_service

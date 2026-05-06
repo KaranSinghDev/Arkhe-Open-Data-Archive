@@ -31,5 +31,5 @@ class RecordAuthor(Base):
     )
     author_order: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
 
-    record: Mapped["Record"] = relationship("Record", back_populates="record_authors")  # type: ignore[name-defined]
+    record: Mapped["Record"] = relationship("Record", back_populates="record_authors")  # type: ignore[name-defined]  # noqa: F821
     author: Mapped["Author"] = relationship("Author", back_populates="record_authors")
