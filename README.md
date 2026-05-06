@@ -8,18 +8,18 @@ A self-hostable, lightweight scientific data repository built for research group
 
 ## Background
 
-[Zenodo](https://zenodo.org) is a general-purpose research data repository operated by CERN. It is widely used across disciplines and genuinely solves the problem of making research outputs publicly citable. [InvenioRDM](https://inveniosoftware.org/products/rdm/) is the open-source framework that powers Zenodo, and it is a serious, production-grade system.
+[Zenodo](https://zenodo.org) is a great platform — it lets researchers publish datasets, software, and papers with a permanent DOI, completely free. I use it and think it does its job well. [InvenioRDM](https://inveniosoftware.org/products/rdm/) is the open-source software that powers it, and it is a serious, well-maintained system built by a team at CERN.
 
-Working with and reading about these platforms surfaced a recurring pattern: the software behind them is not straightforward to self-host. InvenioRDM's own documentation acknowledges it requires Kubernetes or a multi-service Docker setup, a minimum of ~16 GB RAM, familiarity with Elasticsearch/OpenSearch cluster management, and a non-trivial amount of configuration before the first record can be uploaded. Threads in the HEP Software Foundation community, InvenioRDM's GitHub issues, and discussions on ResearchSoftwareEngineering forums reflect a consistent need: something that behaves like Zenodo for a research group's internal use, but which a single person can stand up on a lab VM in an afternoon.
+The problem I kept running into is that neither is easy to self-host. InvenioRDM requires Kubernetes or a complex Docker setup, at least 16 GB of RAM, and a fair amount of configuration just to get a first record in. I went through their documentation, looked at GitHub issues, and read threads in communities like the HEP Software Foundation — and the same question kept coming up: *is there something simpler, that I can just run on my own server?*
 
-The specific situations that came up repeatedly:
+The situations people described were practical ones:
 
-- A department wanting its own repository for student theses and coursework data, without sending pre-publication work to a public external service
-- Research groups at institutions with data-residency or compliance requirements that prevent uploading to CERN-operated infrastructure
-- Workshop and summer school organizers who need participants to share datasets and analysis code for the duration of an event
-- Labs operating in air-gapped or restricted network environments
+- A university department that wants its own repository for student work, without sending data to an external service
+- A research group that can't upload pre-publication data to CERN-operated infrastructure due to compliance rules
+- A summer school or workshop where participants need to share datasets and code for a few weeks
+- A lab that works in a restricted or offline network environment
 
-Arkhe is an attempt to address this gap: a system that implements the same core concepts (ORCID login, file upload, full-text search, FAIR metadata) with a setup time measured in minutes rather than days.
+I built Arkhe to cover that gap — something that works like Zenodo for a small group, runs with a single `docker compose up`, and doesn't need a dedicated sysadmin to maintain.
 
 ---
 
@@ -161,21 +161,30 @@ The prod override removes volume bind-mounts, runs 4 Uvicorn workers, sets memor
 
 ## Honest scope
 
-**Arkhe is a good fit for:**
+A pre-built Docker image is available on Docker Hub — no build step needed:
 
-- A research group or department that wants an internal repository without sending data to an external service
-- Institutions with data-residency requirements
-- Teaching environments where students upload datasets and analysis outputs
-- Small collaborations (up to a few thousand records) that need something running quickly
-- Air-gapped or restricted-network deployments
+```bash
+docker pull karandev7/arkhe-backend:latest
+docker pull karandev7/arkhe-frontend:latest
+```
 
-**Arkhe is not a replacement for:**
+See the [Quick start](#quick-start) section for the full setup using the pre-built images.
 
-- **Zenodo itself** — if you want a public, globally indexed, DOI-minted, permanently archived record, upload to Zenodo. That is what it is built for.
-- **InvenioRDM** — if your institution needs record versioning, embargo controls, community curation, DataCite DOI minting, or expects to grow to hundreds of thousands of records, InvenioRDM is the right choice. It is a production system maintained by a dedicated team at CERN.
-- **Large-scale repositories** — Arkhe has not been benchmarked or tuned beyond moderate load. The OpenSearch and PostgreSQL configurations are intentionally minimal.
+**Arkhe works well if you:**
 
-The intent is not to compete with these systems. It is to cover the gap where those systems are too heavy for the use case.
+- Want your own private repository that stays on your servers
+- Are at an institution where data can't go to external services
+- Are running a course, workshop, or summer school and need somewhere for participants to upload work
+- Need something running quickly without a complex setup
+- Work in an offline or restricted network environment
+
+**Arkhe is not the right tool if you:**
+
+- Want a **public, permanently archived record with a DOI** — just use [Zenodo](https://zenodo.org) directly, it's free and built for that
+- Need **record versioning, embargo controls, or community curation** — InvenioRDM handles all of that and is the right choice for a serious institutional repository
+- Expect to grow to **tens of thousands of records** — Arkhe's OpenSearch and PostgreSQL setup is intentionally minimal and hasn't been tuned for large scale
+
+I built this to fill a specific gap, not to compete with Zenodo or InvenioRDM. If either of those fits your situation, use them.
 
 ---
 
