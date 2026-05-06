@@ -8,9 +8,9 @@ A self-hostable, lightweight scientific data repository built for research group
 
 ## Background
 
-[Zenodo](https://zenodo.org) is a great platform — it lets researchers publish datasets, software, and papers with a permanent DOI, completely free. I use it and think it does its job well. [InvenioRDM](https://inveniosoftware.org/products/rdm/) is the open-source software that powers it, and it is a serious, well-maintained system built by a team at CERN.
+[Zenodo](https://zenodo.org) is a great platform, it lets researchers publish datasets, software, and papers with a permanent DOI, completely free. I use it and think it does its job well. [InvenioRDM](https://inveniosoftware.org/products/rdm/) is the open-source software that powers it, and it is a serious, well-maintained system built by a team at CERN.
 
-The problem I kept running into is that neither is easy to self-host. InvenioRDM requires Kubernetes or a complex Docker setup, at least 16 GB of RAM, and a fair amount of configuration just to get a first record in. I went through their documentation, looked at GitHub issues, and read threads in communities like the HEP Software Foundation — and the same question kept coming up: *is there something simpler, that I can just run on my own server?*
+The problem I kept running into is that neither is easy to self-host. InvenioRDM requires Kubernetes or a complex Docker setup, at least 16 GB of RAM, and a fair amount of configuration just to get a first record in. I went through their documentation, looked at GitHub issues, and read threads in communities like the HEP Software Foundation, and the same question kept coming up: *is there something simpler, that I can just run on my own server?*
 
 The situations people described were practical ones:
 
@@ -19,7 +19,7 @@ The situations people described were practical ones:
 - A summer school or workshop where participants need to share datasets and code for a few weeks
 - A lab that works in a restricted or offline network environment
 
-I built Arkhe to cover that gap — something that works like Zenodo for a small group, runs with a single `docker compose up`, and doesn't need a dedicated sysadmin to maintain.
+I built Arkhe to cover that gap, something that works like Zenodo for a small group, runs with a single `docker compose up`, and doesn't need a dedicated sysadmin to maintain.
 
 ---
 
@@ -159,7 +159,7 @@ The prod override removes volume bind-mounts, runs 4 Uvicorn workers, sets memor
 
 ### Resource usage estimates
 
-These figures are from a single measurement on one laptop (Intel i7, 12 GB RAM, WSL2) at idle with no records. WSL2 adds overhead, and memory usage will vary with JVM tuning, OS, and load — treat them as rough lower bounds, not guarantees.
+These figures are from a single measurement on one laptop (Intel i7, 12 GB RAM, WSL2) at idle with no records. WSL2 adds overhead, and memory usage will vary with JVM tuning, OS, and load, please treat them as rough lower bounds.
 
 | Container | Measured | Expected range |
 |---|---|---|
