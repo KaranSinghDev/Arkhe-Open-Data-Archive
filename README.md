@@ -1,4 +1,6 @@
-# Zenodo-Lite
+# Arkhe
+
+*From the Greek ἀρχή — origin, beginning, source.*
 
 A self-hostable, lightweight scientific data repository built for research groups, university departments, and teaching environments that need FAIR-compliant data sharing without the operational overhead of a full-scale platform.
 
@@ -17,7 +19,7 @@ The specific situations that came up repeatedly:
 - Workshop and summer school organizers who need participants to share datasets and analysis code for the duration of an event
 - Labs operating in air-gapped or restricted network environments
 
-Zenodo-Lite is an attempt to address this gap: a system that implements the same core concepts (ORCID login, file upload, full-text search, FAIR metadata) with a setup time measured in minutes rather than days.
+Arkhe is an attempt to address this gap: a system that implements the same core concepts (ORCID login, file upload, full-text search, FAIR metadata) with a setup time measured in minutes rather than days.
 
 ---
 
@@ -56,8 +58,8 @@ Nine services total, all defined in `docker-compose.yml`. The nginx image is a m
 **Prerequisites:** Docker and Docker Compose (v2).
 
 ```bash
-git clone https://github.com/your-org/zenodo-lite.git
-cd zenodo-lite
+git clone https://github.com/your-org/arkhe.git
+cd arkhe
 cp .env.example .env
 # Set ORCID_CLIENT_ID, ORCID_CLIENT_SECRET, SECRET_KEY, ORCID_REDIRECT_URI
 docker compose up --build
@@ -124,7 +126,7 @@ The prod override removes volume bind-mounts, runs 4 Uvicorn workers, sets memor
 
 ## Comparison with alternatives
 
-| | Zenodo-Lite | InvenioRDM | Zenodo (hosted) |
+| | Arkhe | InvenioRDM | Zenodo (hosted) |
 |---|---|---|---|
 | Self-hostable | Yes | Yes | No |
 | Setup time | ~5 min | 2–8 hours | N/A (SaaS) |
@@ -145,7 +147,7 @@ The prod override removes volume bind-mounts, runs 4 Uvicorn workers, sets memor
 
 ## Honest scope
 
-**Zenodo-Lite is a good fit for:**
+**Arkhe is a good fit for:**
 
 - A research group or department that wants an internal repository without sending data to an external service
 - Institutions with data-residency requirements
@@ -153,11 +155,11 @@ The prod override removes volume bind-mounts, runs 4 Uvicorn workers, sets memor
 - Small collaborations (up to a few thousand records) that need something running quickly
 - Air-gapped or restricted-network deployments
 
-**Zenodo-Lite is not a replacement for:**
+**Arkhe is not a replacement for:**
 
 - **Zenodo itself** — if you want a public, globally indexed, DOI-minted, permanently archived record, upload to Zenodo. That is what it is built for.
 - **InvenioRDM** — if your institution needs record versioning, embargo controls, community curation, DataCite DOI minting, or expects to grow to hundreds of thousands of records, InvenioRDM is the right choice. It is a production system maintained by a dedicated team at CERN.
-- **Large-scale repositories** — Zenodo-Lite has not been benchmarked or tuned beyond moderate load. The OpenSearch and PostgreSQL configurations are intentionally minimal.
+- **Large-scale repositories** — Arkhe has not been benchmarked or tuned beyond moderate load. The OpenSearch and PostgreSQL configurations are intentionally minimal.
 
 The intent is not to compete with these systems. It is to cover the gap where those systems are too heavy for the use case.
 

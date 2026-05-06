@@ -29,4 +29,4 @@ def configure_logging(level: str = "INFO") -> None:
         logging.getLogger(noisy).setLevel(logging.WARNING)
 
 
-logger = structlog.get_logger("zenodo_lite")
+logger = structlog.get_logger("arkhe")

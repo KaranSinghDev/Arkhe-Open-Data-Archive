@@ -1,4 +1,4 @@
-# Contributing to Zenodo-Lite
+# Contributing to Arkhe
 
 Thank you for your interest in contributing! This document describes how to get started, our coding conventions, and the pull request process.
 

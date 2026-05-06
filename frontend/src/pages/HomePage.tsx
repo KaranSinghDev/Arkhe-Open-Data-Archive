@@ -13,7 +13,7 @@ export function HomePage() {
   return (
     <div className="max-w-3xl mx-auto text-center py-16 space-y-8">
       <div>
-        <h1 className="text-4xl font-bold text-gray-900 mb-3">Zenodo-Lite</h1>
+        <h1 className="text-4xl font-bold text-gray-900 mb-3">Arkhe</h1>
         <p className="text-lg text-gray-600">
           Open scientific data repository for physics experiments.
           <br />Share datasets, software, and research outputs — FAIR and free.

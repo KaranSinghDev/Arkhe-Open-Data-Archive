@@ -30,14 +30,14 @@ def _cors_origins() -> list[str]:
 
 
 app = FastAPI(
-    title="Zenodo-Lite API",
+    title="Arkhe API",
     version="1.0.0",
     description=(
-        "A lightweight open-access scientific data repository for physics experiments. "
+        "Arkhe is a self-hostable, lightweight scientific data repository for research groups. "
         "Supports ORCID authentication, file uploads up to 2 GB, full-text search "
         "via OpenSearch, and FAIR-compliant JSON-LD metadata on every record."
     ),
-    contact={"name": "Zenodo-Lite", "url": "https://github.com/zenodo-lite/zenodo-lite"},
+    contact={"name": "Arkhe", "url": "https://github.com/your-org/arkhe"},
     license_info={"name": "MIT", "url": "https://opensource.org/licenses/MIT"},
     openapi_tags=[
         {"name": "auth", "description": "ORCID OAuth 2.0 login and session management"},

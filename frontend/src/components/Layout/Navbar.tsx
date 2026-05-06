@@ -9,7 +9,7 @@ export function Navbar() {
     <header className="bg-white border-b border-gray-200 sticky top-0 z-40">
       <div className="max-w-7xl mx-auto px-4 h-14 flex items-center justify-between">
         <Link to="/" className="text-lg font-bold text-brand-700 tracking-tight">
-          Zenodo-Lite
+          Arkhe
         </Link>
 
         <nav className="hidden md:flex items-center gap-6 text-sm">

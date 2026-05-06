@@ -20,12 +20,12 @@ class Settings(BaseSettings):
     minio_port: int = 9000
     minio_root_user: str = ""
     minio_root_password: str = ""
-    minio_bucket: str = "zenodo-lite"
+    minio_bucket: str = "arkhe"
 
     # OpenSearch
     opensearch_host: str = "opensearch"
     opensearch_port: int = 9200
-    opensearch_index: str = "zenodo-lite-records"
+    opensearch_index: str = "arkhe-records"
 
     # JWT
     secret_key: str = "dev-secret-key-change-in-production"
