@@ -1,0 +1,27 @@
+cff-version: 1.2.0
+title: Arkhe
+message: >-
+  If you use this software in your research, please cite it
+  using the metadata from this file.
+type: software
+authors:
+  - family-names: Singh
+    given-names: Karan
+    orcid: https://orcid.org/0000-0000-0000-0000
+version: 1.0.0
+date-released: "2026-05-03"
+license: MIT
+repository-code: https://github.com/your-org/arkhe
+abstract: >-
+  Arkhe is a self-hostable, lightweight scientific data repository
+  for research groups, university departments, and teaching environments.
+  It provides ORCID authentication, file uploads up to 2 GB, full-text
+  search via OpenSearch, and FAIR-compliant JSON-LD metadata, deployable
+  with Docker Compose in minutes.
+keywords:
+  - research data management
+  - FAIR data
+  - scientific repository
+  - open science
+  - self-hosted
+  - physics

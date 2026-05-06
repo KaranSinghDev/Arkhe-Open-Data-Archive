@@ -57,11 +57,25 @@ Nine services total, all defined in `docker-compose.yml`. The nginx image is a m
 
 **Prerequisites:** Docker and Docker Compose (v2).
 
+### Option A — pre-built images (recommended)
+
+No git clone or build step required.
+
+```bash
+curl -O https://raw.githubusercontent.com/your-org/arkhe/main/docker-compose.hub.yml
+curl -O https://raw.githubusercontent.com/your-org/arkhe/main/.env.example
+cp .env.example .env
+# Edit .env — set ORCID_CLIENT_ID, ORCID_CLIENT_SECRET, SECRET_KEY,
+#             POSTGRES_PASSWORD, MINIO_ROOT_PASSWORD, ORCID_REDIRECT_URI
+docker compose -f docker-compose.hub.yml up -d
+```
+
+### Option B — build from source
+
 ```bash
 git clone https://github.com/your-org/arkhe.git
 cd arkhe
 cp .env.example .env
-# Set ORCID_CLIENT_ID, ORCID_CLIENT_SECRET, SECRET_KEY, ORCID_REDIRECT_URI
 docker compose up --build
 ```
 
