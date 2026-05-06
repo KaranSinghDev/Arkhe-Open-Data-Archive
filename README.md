@@ -144,7 +144,7 @@ The prod override removes volume bind-mounts, runs 4 Uvicorn workers, sets memor
 |---|---|---|---|
 | Self-hostable | Yes | Yes | No |
 | Setup time | ~5 min | 2–8 hours | N/A (SaaS) |
-| Min RAM (single node) | ~2 GB | ~16 GB | N/A |
+| Min RAM (single node) | 2–4 GB | ~16 GB | N/A |
 | Services required | 9 | 30+ | N/A |
 | Kubernetes required | No | Recommended | N/A |
 | DOI minting (DataCite) | No | Yes | Yes |
@@ -157,27 +157,31 @@ The prod override removes volume bind-mounts, runs 4 Uvicorn workers, sets memor
 | File size limit | 2 GB (configurable) | Configurable | 50 GB |
 | Background file parsing | Yes (CSV/JSON/PDF/ROOT) | Plugin-based | No |
 
-### Measured resource usage
+### Resource usage estimates
 
-Numbers from `docker stats` on a laptop (Intel i7, 12 GB RAM, WSL2), idle with no records:
+These figures are from a single measurement on one laptop (Intel i7, 12 GB RAM, WSL2) at idle with no records. WSL2 adds overhead, and memory usage will vary with JVM tuning, OS, and load — treat them as rough lower bounds, not guarantees.
 
-| Container | Memory |
-|---|---|
-| backend (FastAPI + uvicorn) | 122 MiB |
-| celery-worker | 91 MiB |
-| celery-flower | 51 MiB |
-| minio | 81 MiB |
-| postgres | 59 MiB |
-| redis | 7 MiB |
-| **opensearch** | **~1 GiB** |
-| **Total** | **~1.4 GiB** |
+| Container | Measured | Expected range |
+|---|---|---|
+| backend (FastAPI + uvicorn) | 122 MiB | 100–250 MiB |
+| celery-worker | 91 MiB | 80–200 MiB |
+| celery-flower | 51 MiB | 40–100 MiB |
+| minio | 81 MiB | 60–200 MiB |
+| postgres | 59 MiB | 50–500 MiB |
+| redis | 7 MiB | 5–50 MiB |
+| **opensearch** | **~1 GiB** | **1–2 GiB** |
+| **Total** | **~1.4 GiB** | **~1.5–3 GiB** |
 
-OpenSearch accounts for most of the footprint. If you replace it with PostgreSQL full-text search (a future option), the whole stack would fit in ~450 MiB.
+OpenSearch is the dominant cost and its JVM heap is the main variable. With the default settings in `docker-compose.yml` (`-Xms512m -Xmx512m`), it stays around 1 GiB resident. On a loaded system or with a large index, plan for 2 GB just for OpenSearch.
 
-Search latency (p50 / p95, measured inside the container, 200 requests at concurrency 10):
+Search latency (p50 / p95, loopback inside the container, 200 requests at concurrency 10 — no network overhead included):
 
-- `GET /api/records` — 11 ms / 22 ms
-- `GET /api/search?q=` — 12 ms / 58 ms
+| Endpoint | p50 | p95 |
+|---|---|---|
+| `GET /api/records` | ~10 ms | ~25 ms |
+| `GET /api/search?q=` | ~15 ms | ~75 ms |
+
+Add 10–50 ms for LAN and 50–150 ms for WAN depending on your deployment. Numbers will increase under concurrent real load; these were measured with an otherwise idle stack.
 
 ---
 
