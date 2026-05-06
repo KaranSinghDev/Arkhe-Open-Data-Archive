@@ -19,7 +19,6 @@ configure_logging()
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    Instrumentator().instrument(app).expose(app, endpoint="/metrics", include_in_schema=False)
     yield
     await engine.dispose()
 
@@ -65,6 +64,8 @@ app.include_router(auth.router, prefix="/api", tags=["auth"])
 app.include_router(records.router, prefix="/api", tags=["records"])
 app.include_router(files.router, prefix="/api", tags=["files"])
 app.include_router(search.router, prefix="/api", tags=["search"])
+
+Instrumentator().instrument(app).expose(app, endpoint="/metrics", include_in_schema=False)
 
 
 @app.get("/health", include_in_schema=False)
