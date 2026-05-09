@@ -8,8 +8,8 @@ class Settings(BaseSettings):
     database_url: str
     postgres_host: str = "postgres"
     postgres_port: int = 5432
-    postgres_db: str = "zenodolite"
-    postgres_user: str = "zenodolite"
+    postgres_db: str = "arkhe"
+    postgres_user: str = "arkhe"
     postgres_password: str = ""
 
     # Redis
