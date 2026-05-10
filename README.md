@@ -1,6 +1,9 @@
-# Arkhe
+# Arkhe *From the Greek ἀρχή — origin, beginning, source.*
 
-*From the Greek ἀρχή — origin, beginning, source.*
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20098033.svg)](https://doi.org/10.5281/zenodo.20098033)
+[![codecov](https://codecov.io/gh/KaranSinghDev/Arkhe-Open-Data-Archive/graph/badge.svg)](https://codecov.io/gh/KaranSinghDev/Arkhe-Open-Data-Archive)
+[![Docker Deployment](https://img.shields.io/badge/Docker-Deploy_Arkhe-blue?logo=docker)](https://hub.docker.com/r/karandev7/arkhe-backend)
+[![FAIR Metadata](https://img.shields.io/badge/Standard-FAIR_Compliant-green)](https://www.go-fair.org/fair-principles/)
 
 A self-hostable, lightweight scientific data repository built for research groups, university departments, and teaching environments that need FAIR-compliant data sharing without the operational overhead of a full-scale platform.
 
